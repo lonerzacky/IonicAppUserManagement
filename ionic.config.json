@@ -1,6 +1,8 @@
 {
   "name": "AppUserManagement",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "bdbd34e1"
 }
