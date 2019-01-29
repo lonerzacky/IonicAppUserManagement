@@ -28,3 +28,4 @@ UserInterfaceState.xcuserstate
 config.xml
 resources/
 release_key.keystore
+.env
