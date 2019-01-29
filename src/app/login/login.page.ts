@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {ToastrManager} from 'ng6-toastr-notifications';
 
 
 @Component({
@@ -8,7 +9,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
     styleUrls: ['login.page.scss'],
 })
 export class LoginPage {
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public toastr: ToastrManager) {
     }
 
     sysuser_nama = '';
@@ -27,7 +28,15 @@ export class LoginPage {
             }
         ).subscribe(
             (res) => {
-                console.log(res);
+                // @ts-ignore
+                if (res.response_code === '00') {
+                    // @ts-ignore
+                    this.toastr.successToastr(res.response_message, 'Sukses!', {position: 'bottom-center'});
+                } else {
+                    // @ts-ignore
+                    this.toastr.errorToastr(res.response_message, 'Gagal!', {position: 'bottom-center'});
+
+                }
             },
             err => console.log(err)
         );
