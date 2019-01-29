@@ -50,7 +50,7 @@ export class LoginPage {
 
                 }
             },
-            err => console.log(err)
+            err => this.toastr.errorToastr(JSON.stringify(err.message), 'Gagal!', {position: 'bottom-center'})
         );
     }
 }
