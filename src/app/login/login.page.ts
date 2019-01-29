@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ToastrManager} from 'ng6-toastr-notifications';
 import {Storage} from '@ionic/storage';
+import {NavController} from '@ionic/angular';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class LoginPage {
         public http: HttpClient,
         public toastr: ToastrManager,
         private storage: Storage,
+        private navCtrl: NavController
     ) {
     }
 
@@ -36,9 +38,12 @@ export class LoginPage {
                 // @ts-ignore
                 if (res.response_code === '00') {
                     // @ts-ignore
-                    this.storage.set('loginInfo', res.response_data);
+                    this.storage.set('loginInfo', res.response_data).then(function (result) {
+                        console.log(result);
+                    });
                     // @ts-ignore
                     this.toastr.successToastr(res.response_message, 'Sukses!', {position: 'bottom-center'});
+                    return this.navCtrl.navigateForward('/home');
                 } else {
                     // @ts-ignore
                     this.toastr.errorToastr(res.response_message, 'Gagal!', {position: 'bottom-center'});
