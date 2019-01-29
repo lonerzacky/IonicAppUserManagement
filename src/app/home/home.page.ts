@@ -22,7 +22,7 @@ export class HomePage {
 
     logout() {
         this.storage.remove('loginInfo').then(() => {
-            return this.navCtrl.navigateBack('/login');
+            return this.navCtrl.navigateBack('/login', {skipLocationChange: true});
         });
     }
 
