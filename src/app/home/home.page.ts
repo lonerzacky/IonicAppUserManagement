@@ -13,7 +13,7 @@ export class HomePage {
     constructor(private storage: Storage, private navCtrl: NavController) {
         storage.get('loginInfo').then((val) => {
             if (val == null) {
-                return this.navCtrl.navigateBack('/login');
+                return this.navCtrl.navigateBack('/login', {skipLocationChange: true});
             } else {
                 this.sysuser_nama = val[0].sysuser_nama;
             }
