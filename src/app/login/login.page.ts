@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {ToastrManager} from 'ng6-toastr-notifications';
+import {Storage} from '@ionic/storage';
 
 
 @Component({
@@ -9,7 +10,11 @@ import {ToastrManager} from 'ng6-toastr-notifications';
     styleUrls: ['login.page.scss'],
 })
 export class LoginPage {
-    constructor(public http: HttpClient, public toastr: ToastrManager) {
+    constructor(
+        public http: HttpClient,
+        public toastr: ToastrManager,
+        private storage: Storage,
+    ) {
     }
 
     sysuser_nama = '';
@@ -30,6 +35,8 @@ export class LoginPage {
             (res) => {
                 // @ts-ignore
                 if (res.response_code === '00') {
+                    // @ts-ignore
+                    this.storage.set('loginInfo', res.response_data);
                     // @ts-ignore
                     this.toastr.successToastr(res.response_message, 'Sukses!', {position: 'bottom-center'});
                 } else {
