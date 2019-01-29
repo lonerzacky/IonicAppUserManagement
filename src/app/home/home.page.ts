@@ -12,9 +12,11 @@ export class HomePage {
 
     constructor(private storage: Storage, private navCtrl: NavController) {
         storage.get('loginInfo').then((val) => {
-            this.sysuser_nama = val[0].sysuser_nama;
-        }).catch(function () {
-            return navCtrl.navigateBack('/login');
+            if (val == null) {
+                return this.navCtrl.navigateBack('/login');
+            } else {
+                this.sysuser_nama = val[0].sysuser_nama;
+            }
         });
     }
 
