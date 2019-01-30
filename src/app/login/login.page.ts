@@ -12,8 +12,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 
 export class LoginPage implements OnInit {
-    sysuser_nama = '';
-    sysuser_passw = '';
     loginForm: FormGroup;
 
     constructor(
@@ -37,10 +35,11 @@ export class LoginPage implements OnInit {
     }
 
     verifyLogin() {
-        if (this.sysuser_nama && this.sysuser_passw) {
+        const formItem = this.loginForm.value;
+        if (formItem.sysuser_nama && formItem.sysuser_passw) {
             const body = new HttpParams()
-                .set('sysuser_nama', this.sysuser_nama)
-                .set('sysuser_passw', this.sysuser_passw);
+                .set('sysuser_nama', formItem.sysuser_nama)
+                .set('sysuser_passw', formItem.sysuser_passw);
             return this.http.post('http://localhost:5000/verifyLogin',
                 body,
                 {
