@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
             const body = new HttpParams()
                 .set('sysuser_nama', this.sysuser_nama)
                 .set('sysuser_passw', this.sysuser_passw);
-            return this.http.post('http://192.196.1.111:5000/verifyLogin',
+            return this.http.post('http://localhost:5000/verifyLogin',
                 body,
                 {
                     headers: new HttpHeaders()
