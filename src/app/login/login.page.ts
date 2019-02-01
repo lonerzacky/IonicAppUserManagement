@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
             const body = new HttpParams()
                 .set('sysuser_nama', formItem.sysuser_nama)
                 .set('sysuser_passw', formItem.sysuser_passw);
-            return this.http.post('http:/ec2-3-17-14-3.us-east-2.compute.amazonaws.com:5000/verifyLogin',
+            return this.http.post('http://ec2-3-17-14-3.us-east-2.compute.amazonaws.com:5000/verifyLogin',
                 body,
                 {
                     headers: new HttpHeaders()
