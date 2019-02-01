@@ -14,6 +14,8 @@ import {GlobalService} from '../global.service';
 
 export class LoginPage implements OnInit {
     loginForm: FormGroup;
+    passwordType = 'password';
+    passwordIcon = 'eye-off';
 
     constructor(
         public http: HttpClient,
@@ -33,6 +35,11 @@ export class LoginPage implements OnInit {
             sysuser_nama: new FormControl('', [Validators.required]),
             sysuser_passw: new FormControl('', [Validators.required])
         });
+    }
+
+    hideShowPassword() {
+        this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+        this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
     }
 
     verifyLogin() {
@@ -66,6 +73,7 @@ export class LoginPage implements OnInit {
                         this.navCtrl.navigateForward('/home', {skipLocationChange: true}).then(function () {
                             console.log('Navigate to Home');
                         });
+                        this.loginForm.reset();
                     } else {
                         this.globalService.dismissLoading().then(function () {
                             console.log('Dismiss');

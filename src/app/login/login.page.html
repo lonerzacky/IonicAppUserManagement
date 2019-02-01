@@ -1,47 +1,39 @@
-<ion-app>
-    <ion-header>
-        <ion-toolbar>
-            <ion-title>User Management</ion-title>
-        </ion-toolbar>
-    </ion-header>
-    <ion-content padding>
-        <ion-grid>
-            <ion-row justify-content-center>
-                <form novalidate (ngSubmit)="verifyLogin()" [formGroup]="loginForm">
-                    <ion-col align-self-center sizeMd="6" sizeLg="5" sizeXs="12">
-                        <div text-center>
-                            <h4>Login Aplikasi</h4>
+<ion-grid class="home-background">
+    <ion-row justify-content-center>
+        <ion-col align-self-center sizeMd="6" sizeLg="5" sizeXs="12">
+            <form novalidate (ngSubmit)="verifyLogin()" [formGroup]="loginForm">
+                <div text-center>
+                    <h4>Login Aplikasi</h4>
+                </div>
+                <div padding>
+                    <ion-item>
+                        <ion-input type="text" placeholder="Username" formControlName="sysuser_nama"
+                                   [class.hasError]="!loginForm.controls.sysuser_nama.valid && loginForm.controls.sysuser_nama.dirty"></ion-input>
+                    </ion-item>
+                    <ion-item lines="none"
+                              *ngIf="( loginForm.get('sysuser_nama').hasError('required') ) && loginForm.get('sysuser_nama').touched">
+                        <div class="error"
+                             *ngIf="loginForm.get('sysuser_nama').hasError('required') && loginForm.get('sysuser_nama').touched">
+                            Username Harus Diisi
                         </div>
-                        <div padding>
-                            <ion-item>
-                                <ion-input type="text" placeholder="Username" formControlName="sysuser_nama"
-                                           [class.hasError]="!loginForm.controls.sysuser_nama.valid && loginForm.controls.sysuser_nama.dirty"></ion-input>
-                            </ion-item>
-                            <ion-item no-lines
-                                      *ngIf="( loginForm.get('sysuser_nama').hasError('required') ) && loginForm.get('sysuser_nama').touched">
-                                <div class="error"
-                                     *ngIf="loginForm.get('sysuser_nama').hasError('required') && loginForm.get('sysuser_nama').touched">
-                                    Username Harus Diisi
-                                </div>
-                            </ion-item>
-                            <ion-item>
-                                <ion-input type="password" placeholder="Password" formControlName="sysuser_passw"
-                                           [class.hasError]="!loginForm.controls.sysuser_passw.valid && loginForm.controls.sysuser_passw.dirty"></ion-input>
-                            </ion-item>
-                            <ion-item no-lines
-                                      *ngIf="( loginForm.get('sysuser_passw').hasError('required') ) && loginForm.get('sysuser_passw').touched">
-                                <div class="error"
-                                     *ngIf="loginForm.get('sysuser_passw').hasError('required') && loginForm.get('sysuser_passw').touched">
-                                    Password Harus Diisi
-                                </div>
-                            </ion-item>
+                    </ion-item>
+                    <ion-item>
+                        <ion-input type="password" placeholder="Password" [type]="passwordType" clearOnEdit="false" formControlName="sysuser_passw"
+                                   [class.hasError]="!loginForm.controls.sysuser_passw.valid && loginForm.controls.sysuser_passw.dirty"></ion-input>
+                        <ion-icon padding item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+                    </ion-item>
+                    <ion-item lines="none"
+                              *ngIf="( loginForm.get('sysuser_passw').hasError('required') ) && loginForm.get('sysuser_passw').touched">
+                        <div class="error"
+                             *ngIf="loginForm.get('sysuser_passw').hasError('required') && loginForm.get('sysuser_passw').touched">
+                            Password Harus Diisi
                         </div>
-                        <div padding>
-                            <ion-button size="large" type="submit" expand="block">Login</ion-button>
-                        </div>
-                    </ion-col>
-                </form>
-            </ion-row>
-        </ion-grid>
-    </ion-content>
-</ion-app>
+                    </ion-item>
+                </div>
+                <div padding>
+                    <ion-button size="large" type="submit" expand="block">Login</ion-button>
+                </div>
+            </form>
+        </ion-col>
+    </ion-row>
+</ion-grid>
