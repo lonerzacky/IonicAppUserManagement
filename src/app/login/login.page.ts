@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {ToastrManager} from 'ng6-toastr-notifications';
 import {Storage} from '@ionic/storage';
 import {NavController} from '@ionic/angular';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {GlobalService} from '../global.service';
+
 
 @Component({
     selector: 'app-login',
@@ -16,9 +17,9 @@ export class LoginPage implements OnInit {
 
     constructor(
         public http: HttpClient,
-        public toastr: ToastrManager,
         private storage: Storage,
-        private navCtrl: NavController
+        private navCtrl: NavController,
+        private globalService: GlobalService
     ) {
         storage.get('loginInfo').then((val) => {
             if (val) {
@@ -37,6 +38,9 @@ export class LoginPage implements OnInit {
     verifyLogin() {
         const formItem = this.loginForm.value;
         if (this.loginForm.valid) {
+            this.globalService.presentLoading().then(function () {
+                console.log('Show Loader');
+            });
             const body = new HttpParams()
                 .set('sysuser_nama', formItem.sysuser_nama)
                 .set('sysuser_passw', formItem.sysuser_passw);
@@ -55,17 +59,25 @@ export class LoginPage implements OnInit {
                             console.log('Successfully Create Login Storage');
                         });
                         // @ts-ignore
-                        this.toastr.successToastr(res.response_message, 'Sukses!', {position: 'bottom-center'});
-                        return this.navCtrl.navigateForward('/home', {skipLocationChange: true});
+                        this.globalService.showMessage(res.response_message, 'success', 'Sukses!');
+                        this.globalService.dismissLoading().then(function () {
+                            console.log('Dismiss');
+                        });
+                        this.navCtrl.navigateForward('/home', {skipLocationChange: true}).then(function () {
+                            console.log('Navigate to Home');
+                        });
                     } else {
+                        this.globalService.dismissLoading().then(function () {
+                            console.log('Dismiss');
+                        });
                         // @ts-ignore
-                        this.toastr.errorToastr(res.response_message, 'Gagal!', {position: 'bottom-center'});
+                        this.globalService.showMessage(res.response_message, 'error', 'Gagal!');
                     }
                 },
-                err => this.toastr.errorToastr(JSON.stringify(err.message), 'Gagal!', {position: 'bottom-center'})
+                err => this.globalService.showMessage(JSON.stringify(err.message), 'error', 'Gagal!')
             );
         } else {
-            this.toastr.errorToastr('Harap Masukan Username dan Password', 'Gagal!', {position: 'bottom-center'});
+            this.globalService.showMessage('Harap Masukan Username dan Password', 'error', 'Gagal!');
         }
     }
 }
